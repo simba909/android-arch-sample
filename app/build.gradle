@@ -1,13 +1,14 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+    buildToolsVersion '26.0.0-rc2'
     defaultConfig {
         applicationId "se.jarbrant.androidarchsample"
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -29,11 +30,16 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     compile "com.android.support:appcompat-v7:$support_version"
     compile "com.android.support:recyclerview-v7:$support_version"
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
     // Android Architecture
     compile "android.arch.lifecycle:runtime:$arch_version"
     compile "android.arch.lifecycle:extensions:$arch_version"
+    compile "android.arch.persistence.room:runtime:$arch_version"
     annotationProcessor "android.arch.lifecycle:compiler:$arch_version"
+    annotationProcessor "android.arch.persistence.room:compiler:$arch_version"
+    kapt "android.arch.lifecycle:compiler:$arch_version"
+    kapt "android.arch.persistence.room:compiler:$arch_version"
 
     // Network and JSON
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
@@ -46,5 +52,4 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
