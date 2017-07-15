@@ -14,17 +14,10 @@ interface ChannelDao {
     @Query("SELECT * FROM $TABLE_NAME $ORDER_BY_NAME")
     fun load(): LiveData<List<Channel>>
 
-    /**
-     * Note: ":arg0" is because of an unfortunate bug in Kotlin < 1.1.3
-     *
-     * See: https://youtrack.jetbrains.com/issue/KT-17959
-     *
-     * TODO -> Rename this after updating to Kotlin 1.1.3 or later
-     */
-    @Query("SELECT * FROM $TABLE_NAME WHERE ${Channel.FIELD_ID} IN (:p0) $ORDER_BY_NAME")
-    fun load(channelsIds: IntArray): LiveData<List<Channel>>
+    @Query("SELECT * FROM $TABLE_NAME WHERE ${Channel.FIELD_ID} IN (:channelIds) $ORDER_BY_NAME")
+    fun load(channelIds: IntArray): LiveData<List<Channel>>
 
-    @Query("SELECT * FROM $TABLE_NAME WHERE ${Channel.FIELD_TYPE} = :p0 $ORDER_BY_NAME")
+    @Query("SELECT * FROM $TABLE_NAME WHERE ${Channel.FIELD_TYPE} = :type $ORDER_BY_NAME")
     fun load(type: Int): LiveData<List<Channel>>
 
     @Insert(onConflict = REPLACE)
