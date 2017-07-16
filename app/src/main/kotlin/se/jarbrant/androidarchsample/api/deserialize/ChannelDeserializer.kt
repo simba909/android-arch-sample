@@ -23,10 +23,11 @@ class ChannelDeserializer : JsonDeserializer<Channel> {
 
         val id = jsonRoot.getOrElse("id", -1)
         val name = resolveName(id, jsonRoot.getOrElse("name", "[No channel]"))
+        val image: String? = jsonRoot.get("image").asString
         val channelType = resolveType(id, jsonRoot.getOrElse("channeltype", ""))
         val channelColor = resolveColor(id, jsonRoot.getOrElse("color", "404242"))
 
-        return Channel(id, name, channelType, channelColor)
+        return Channel(id, name, image, channelType, channelColor)
     }
 
     private fun resolveName(channelId: Int, fallbackName: String): String {

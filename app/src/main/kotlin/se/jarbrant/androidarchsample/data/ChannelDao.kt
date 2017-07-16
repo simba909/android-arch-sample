@@ -3,6 +3,7 @@ package se.jarbrant.androidarchsample.data
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
 import android.arch.persistence.room.OnConflictStrategy.REPLACE
+import se.jarbrant.androidarchsample.data.Channel.Companion.TABLE_NAME
 
 /**
  * @author Simon Jarbrant
@@ -30,8 +31,6 @@ interface ChannelDao {
     fun delete(channel: Channel)
 
     companion object {
-        const val TABLE_NAME = "channels"
-
         private const val ORDER_BY_NAME = "ORDER BY ${Channel.FIELD_NAME}"
     }
 }

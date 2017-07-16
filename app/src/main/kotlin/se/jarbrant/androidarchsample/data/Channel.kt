@@ -8,23 +8,29 @@ import android.arch.persistence.room.PrimaryKey
  * @author Simon Jarbrant
  * Created on 2017-05-20.
  */
-@Entity(tableName = "channels")
+@Entity(tableName = Channel.TABLE_NAME)
 data class Channel(
         @PrimaryKey
         var id: Int,
 
-        @ColumnInfo(name = Channel.FIELD_NAME)
+        @ColumnInfo(name = FIELD_NAME)
         var name: String,
 
-        @ColumnInfo(name = Channel.FIELD_TYPE)
+        @ColumnInfo(name = FIELD_IMAGE)
+        var image: String?,
+
+        @ColumnInfo(name = FIELD_TYPE)
         var type: Int,
 
         @ColumnInfo(name = "color")
         var color: Int
 ) {
     companion object {
+        const val TABLE_NAME = "channels"
+
         const val FIELD_ID = "id"
         const val FIELD_NAME = "name"
+        const val FIELD_IMAGE = "image"
         const val FIELD_TYPE = "type"
 
         const val TYPE_NATIONAL = 0

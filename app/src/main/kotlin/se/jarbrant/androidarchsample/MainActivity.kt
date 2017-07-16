@@ -4,11 +4,13 @@ import android.arch.lifecycle.LifecycleActivity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.widget.Toolbar
 import se.jarbrant.androidarchsample.ui.MainAdapter
+import se.jarbrant.androidarchsample.ui.SpacingItemDecoration
 import se.jarbrant.androidarchsample.viewmodels.ChannelViewModel
 
 class MainActivity : LifecycleActivity() {
@@ -24,8 +26,12 @@ class MainActivity : LifecycleActivity() {
         setActionBar(toolbar)
 
         recyclerView = findViewById(R.id.recycler_view)
+        recyclerView.setHasFixedSize(true)
+
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
+
+        recyclerView.addItemDecoration(SpacingItemDecoration())
     }
 
     override fun onStart() {
