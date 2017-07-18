@@ -6,8 +6,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import se.jarbrant.androidarchsample.api.deserialize.ChannelDeserializer
 import se.jarbrant.androidarchsample.api.deserialize.CurrentEpisodeDeserializer
+import se.jarbrant.androidarchsample.api.deserialize.CurrentEpisodesDeserializer
 import se.jarbrant.androidarchsample.data.Channel
 import se.jarbrant.androidarchsample.data.CurrentEpisode
+import se.jarbrant.androidarchsample.data.CurrentEpisodesResponse
 
 /**
  * @author Simon Jarbrant
@@ -21,6 +23,7 @@ object Api {
     private val gson: Gson = GsonBuilder()
             .registerTypeAdapter(Channel::class.java, ChannelDeserializer())
             .registerTypeAdapter(CurrentEpisode::class.java, CurrentEpisodeDeserializer())
+            .registerTypeAdapter(CurrentEpisodesResponse::class.java, CurrentEpisodesDeserializer())
             .create()
 
     init {

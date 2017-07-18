@@ -25,9 +25,9 @@
             android:id="@+id/card_super_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:paddingTop="8dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:paddingTop="10dp"
             android:textStyle="bold"
             app:layout_constraintLeft_toRightOf="@+id/card_image"
             app:layout_constraintRight_toRightOf="parent"
@@ -38,13 +38,48 @@
             android:id="@+id/card_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:textSize="18sp"
             app:layout_constraintLeft_toRightOf="@+id/card_image"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/card_super_title"
             tools:text="Here be title" />
+
+        <ProgressBar
+            android:id="@+id/card_progress"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            app:layout_constraintLeft_toRightOf="@id/card_image"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/card_title"
+            tools:progress="50" />
+
+        <TextView
+            android:id="@+id/card_start_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            app:layout_constraintLeft_toRightOf="@+id/card_image"
+            app:layout_constraintRight_toLeftOf="@+id/card_end_time"
+            app:layout_constraintTop_toBottomOf="@+id/card_progress"
+            tools:text="00:00" />
+
+        <TextView
+            android:id="@+id/card_end_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textAlignment="textEnd"
+            app:layout_constraintLeft_toRightOf="@+id/card_start_time"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_progress"
+            tools:text="00:00" />
 
     </android.support.constraint.ConstraintLayout>
 

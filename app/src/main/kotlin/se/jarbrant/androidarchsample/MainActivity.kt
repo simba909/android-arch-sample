@@ -38,12 +38,10 @@ class MainActivity : LifecycleActivity() {
         super.onStart()
 
         val viewModel = ViewModelProviders.of(this).get(ChannelViewModel::class.java)
-        viewModel.nationalChannels.observe(this, Observer { channels ->
-            if (channels != null) {
+        viewModel.currentEpisodes.observe(this, Observer { episodes ->
+            if (episodes != null) {
                 Log.d(TAG, "Setting data on adapter...")
-                adapter.setData(channels)
-            } else {
-                Log.w(TAG, "Got null channels from the channels viewmodel :(")
+                adapter.setData(episodes)
             }
         })
     }

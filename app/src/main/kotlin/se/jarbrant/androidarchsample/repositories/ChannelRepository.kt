@@ -1,6 +1,7 @@
 package se.jarbrant.androidarchsample.repositories
 
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import android.os.AsyncTask
 import android.util.Log
 import retrofit2.Call
@@ -9,6 +10,7 @@ import retrofit2.Response
 import se.jarbrant.androidarchsample.api.Api
 import se.jarbrant.androidarchsample.data.Channel
 import se.jarbrant.androidarchsample.data.ChannelHolder
+import se.jarbrant.androidarchsample.data.CurrentEpisode
 
 /**
  * @author Simon Jarbrant
@@ -20,17 +22,21 @@ object ChannelRepository {
 
     private val channelDao = DatabaseRepository.database.channelDao()
 
+    fun getChannel(channelId: Int): Channel {
+        return channelDao.load(channelId)
+    }
+
     fun getChannels(): LiveData<List<Channel>> {
         refreshChannels()
-        return channelDao.load()
+        return channelDao.loadAll()
     }
 
     fun getNationalChannels(): LiveData<List<Channel>> {
         refreshChannels()
-        return channelDao.load(Channel.TYPE_NATIONAL)
+        return channelDao.loadByType(Channel.TYPE_NATIONAL)
     }
 
-    private fun refreshChannels() {
+    fun refreshChannels(completionBody: ((List<Channel>) -> Unit)? = null) {
         Log.d(TAG, "Refreshing channels...")
 
         Api.client.getChannels().enqueue(object : Callback<ChannelHolder> {
@@ -50,6 +56,10 @@ object ChannelRepository {
                     AsyncTask.execute {
                         Log.d(TAG, "Saving channel data... -> $channels")
                         channelDao.save(*channels.toTypedArray())
+
+                        if (completionBody != null) {
+                            completionBody(channels)
+                        }
                     }
 
                 } else {

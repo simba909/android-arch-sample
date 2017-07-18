@@ -13,13 +13,16 @@ import se.jarbrant.androidarchsample.data.Channel.Companion.TABLE_NAME
 interface ChannelDao {
 
     @Query("SELECT * FROM $TABLE_NAME $ORDER_BY_NAME")
-    fun load(): LiveData<List<Channel>>
+    fun loadAll(): LiveData<List<Channel>>
+
+    @Query("SELECT * FROM $TABLE_NAME WHERE ${Channel.FIELD_ID} = :channelId")
+    fun load(channelId: Int): Channel
 
     @Query("SELECT * FROM $TABLE_NAME WHERE ${Channel.FIELD_ID} IN (:channelIds) $ORDER_BY_NAME")
     fun load(channelIds: IntArray): LiveData<List<Channel>>
 
     @Query("SELECT * FROM $TABLE_NAME WHERE ${Channel.FIELD_TYPE} = :type $ORDER_BY_NAME")
-    fun load(type: Int): LiveData<List<Channel>>
+    fun loadByType(type: Int): LiveData<List<Channel>>
 
     @Insert(onConflict = REPLACE)
     fun save(vararg channels: Channel)

@@ -20,6 +20,6 @@
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:paddingTop="10dp"
-        tools:listitem="@layout/card_channel" />
+        tools:listitem="@layout/card_current_episode" />
 
 </LinearLayout>
