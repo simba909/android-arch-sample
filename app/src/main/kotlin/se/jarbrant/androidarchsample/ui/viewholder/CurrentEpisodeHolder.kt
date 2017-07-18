@@ -1,5 +1,6 @@
 package se.jarbrant.androidarchsample.ui.viewholder
 
+import android.os.Handler
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -22,6 +23,9 @@ class CurrentEpisodeHolder(itemView: View) : BindableViewHolder<CurrentEpisode>(
     private val startTime: TextView = itemView.findViewById(R.id.card_start_time)
     private val endTime: TextView = itemView.findViewById(R.id.card_end_time)
 
+    private val progressUpdateHandler = Handler()
+    private var episode: CurrentEpisode? = null
+
     override fun bind(item: CurrentEpisode) {
         item.image?.let { imagePath ->
             Picasso.with(itemView.context)
@@ -39,17 +43,27 @@ class CurrentEpisodeHolder(itemView: View) : BindableViewHolder<CurrentEpisode>(
         startTime.text = item.startTime.toShortClock()
         endTime.text = item.endTime.toShortClock()
 
-        setProgress(item)
+        episode = item
+        setProgress()
     }
 
-    private fun setProgress(episode: CurrentEpisode) {
-        if (episode.startTime == 0L || episode.endTime == 0L) return
+    override fun unbind() {
+        progressUpdateHandler.removeCallbacksAndMessages(null)
+        episode = null
+    }
 
-        val currentTime = System.currentTimeMillis()
+    private fun setProgress() {
+        episode?.let {
+            if (it.startTime == 0L || it.endTime == 0L) return
 
-        val elapsedTime = currentTime - episode.startTime
-        val percent = elapsedTime / episode.duration.toDouble()
+            val elapsedTime = System.currentTimeMillis() - it.startTime
+            val percent = elapsedTime / it.duration.toDouble()
 
-        progress.progress = (100 * percent).toInt()
+            progress.progress = (100 * percent).toInt()
+
+            progressUpdateHandler.postDelayed({
+                setProgress()
+            }, 3000L)
+        }
     }
 }

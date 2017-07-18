@@ -28,6 +28,10 @@ class MainAdapter : RecyclerView.Adapter<CurrentEpisodeHolder>() {
         holder.bind(items[position])
     }
 
+    override fun onViewRecycled(holder: CurrentEpisodeHolder) {
+        holder.unbind()
+    }
+
     fun setData(newData: List<CurrentEpisode>) {
         items = newData
 

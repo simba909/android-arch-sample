@@ -10,4 +10,6 @@ import android.view.View
 abstract class BindableViewHolder<in T>(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     abstract fun bind(item: T)
+
+    open fun unbind() {}
 }
