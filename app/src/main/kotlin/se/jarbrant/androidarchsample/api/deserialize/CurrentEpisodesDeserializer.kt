@@ -4,7 +4,7 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import se.jarbrant.androidarchsample.data.CurrentEpisode
-import se.jarbrant.androidarchsample.data.CurrentEpisodesResponse
+import se.jarbrant.androidarchsample.api.response.CurrentEpisodesResponse
 import se.jarbrant.androidarchsample.repositories.ChannelRepository
 import java.lang.reflect.Type
 

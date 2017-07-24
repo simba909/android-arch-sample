@@ -1,16 +1,14 @@
 package se.jarbrant.androidarchsample.repositories
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
 import android.os.AsyncTask
 import android.util.Log
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import se.jarbrant.androidarchsample.api.Api
+import se.jarbrant.androidarchsample.api.response.ChannelsResponse
 import se.jarbrant.androidarchsample.data.Channel
-import se.jarbrant.androidarchsample.data.ChannelHolder
-import se.jarbrant.androidarchsample.data.CurrentEpisode
 
 /**
  * @author Simon Jarbrant
@@ -39,15 +37,15 @@ object ChannelRepository {
     fun refreshChannels(completionBody: ((List<Channel>) -> Unit)? = null) {
         Log.d(TAG, "Refreshing channels...")
 
-        Api.client.getChannels().enqueue(object : Callback<ChannelHolder> {
+        Api.client.getChannels().enqueue(object : Callback<ChannelsResponse> {
 
-            override fun onFailure(call: Call<ChannelHolder>, t: Throwable) {
+            override fun onFailure(call: Call<ChannelsResponse>, t: Throwable) {
                 Log.e(TAG, "Failed to fetch channels", t)
                 // TODO -> Forward this to the view
             }
 
-            override fun onResponse(call: Call<ChannelHolder>,
-                                    response: Response<ChannelHolder>) {
+            override fun onResponse(call: Call<ChannelsResponse>,
+                                    response: Response<ChannelsResponse>) {
 
                 val responseBody = response.body()
 

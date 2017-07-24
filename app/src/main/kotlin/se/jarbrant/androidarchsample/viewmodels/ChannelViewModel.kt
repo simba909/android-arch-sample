@@ -1,12 +1,9 @@
 package se.jarbrant.androidarchsample.viewmodels
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MediatorLiveData
-import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
-import android.os.AsyncTask
 import se.jarbrant.androidarchsample.data.Channel
-import se.jarbrant.androidarchsample.data.CurrentEpisodesLiveData
+import se.jarbrant.androidarchsample.data.live.CurrentEpisodesLiveData
 import se.jarbrant.androidarchsample.repositories.ChannelRepository
 
 /**

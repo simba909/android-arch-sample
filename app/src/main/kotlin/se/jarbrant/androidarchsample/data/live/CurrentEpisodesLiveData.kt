@@ -1,4 +1,4 @@
-package se.jarbrant.androidarchsample.data
+package se.jarbrant.androidarchsample.data.live
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
@@ -8,6 +8,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import se.jarbrant.androidarchsample.api.Api
+import se.jarbrant.androidarchsample.api.response.CurrentEpisodesResponse
+import se.jarbrant.androidarchsample.data.Channel
+import se.jarbrant.androidarchsample.data.CurrentEpisode
 
 /**
  * @author Simon Jarbrant

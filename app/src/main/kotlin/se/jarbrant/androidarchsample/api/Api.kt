@@ -9,7 +9,7 @@ import se.jarbrant.androidarchsample.api.deserialize.CurrentEpisodeDeserializer
 import se.jarbrant.androidarchsample.api.deserialize.CurrentEpisodesDeserializer
 import se.jarbrant.androidarchsample.data.Channel
 import se.jarbrant.androidarchsample.data.CurrentEpisode
-import se.jarbrant.androidarchsample.data.CurrentEpisodesResponse
+import se.jarbrant.androidarchsample.api.response.CurrentEpisodesResponse
 
 /**
  * @author Simon Jarbrant

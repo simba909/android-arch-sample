@@ -1,4 +1,6 @@
-package se.jarbrant.androidarchsample.data
+package se.jarbrant.androidarchsample.api.response
+
+import se.jarbrant.androidarchsample.data.CurrentEpisode
 
 /**
  * @author Simon Jarbrant
