@@ -11,6 +11,7 @@ import se.jarbrant.androidarchsample.api.Api
 import se.jarbrant.androidarchsample.api.response.CurrentEpisodesResponse
 import se.jarbrant.androidarchsample.data.Channel
 import se.jarbrant.androidarchsample.data.CurrentEpisode
+import se.jarbrant.androidarchsample.extensions.postDelayed
 
 /**
  * @author Simon Jarbrant
@@ -24,14 +25,14 @@ class CurrentEpisodesLiveData(channelSource: LiveData<List<Channel>>)
     private var channelIds: List<Int>? = null
 
     init {
-        addSource(channelSource, { channels ->
+        addSource(channelSource) { channels ->
             if (channels != null) {
                 // We have new channels!
                 Log.d(TAG, "New channels: $channels")
                 channelIds = channels.map { it.id }
                 refresh()
             }
-        })
+        }
     }
 
     override fun onActive() {
@@ -99,9 +100,9 @@ class CurrentEpisodesLiveData(channelSource: LiveData<List<Channel>>)
         Log.d(TAG, "Scheduling next update in $timeLeft ms")
 
         handler.removeCallbacksAndMessages(null)
-        handler.postDelayed({
+        handler.postDelayed(timeLeft) {
             refresh()
-        }, timeLeft)
+        }
     }
 
     companion object {

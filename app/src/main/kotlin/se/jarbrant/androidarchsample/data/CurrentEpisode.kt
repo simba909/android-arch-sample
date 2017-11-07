@@ -24,12 +24,10 @@ data class CurrentEpisode(val id: Int, val title: String) {
     companion object {
 
         fun from(json: JsonObject): CurrentEpisode {
-            val id = if (json.has("episodeid")) {
-                json.get("episodeid").asInt
-            } else if (json.has("id")) {
-                json.get("id").asInt
-            } else {
-                -1
+            val id = when {
+                json.has("episodeid") -> json.get("episodeid").asInt
+                json.has("id") -> json.get("id").asInt
+                else -> -1
             }
 
             val title = json.get("title").asString

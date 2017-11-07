@@ -1,11 +1,13 @@
 package se.jarbrant.androidarchsample.ui
 
+import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import se.jarbrant.androidarchsample.R
 import se.jarbrant.androidarchsample.data.CurrentEpisode
 import se.jarbrant.androidarchsample.ui.viewholder.CurrentEpisodeHolder
+import se.jarbrant.androidarchsample.utils.CurrentEpisodeDiffUtil
 
 /**
  * @author Simon Jarbrant
@@ -33,9 +35,11 @@ class MainAdapter : RecyclerView.Adapter<CurrentEpisodeHolder>() {
     }
 
     fun setData(newData: List<CurrentEpisode>) {
+        val differ = CurrentEpisodeDiffUtil(items, newData)
+        val result = DiffUtil.calculateDiff(differ)
+
         items = newData
 
-        // TODO -> This should use DiffUtil instead
-        notifyDataSetChanged()
+        result.dispatchUpdatesTo(this)
     }
 }
