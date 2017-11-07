@@ -23,12 +23,10 @@ class CurrentEpisodeDeserializer : JsonDeserializer<CurrentEpisode> {
         val title: String
 
         if (episodeJson != null) {
-            if (episodeJson.has("episodeid")) {
-                id = episodeJson.get("episodeid").asInt
-            } else if (episodeJson.has("id")) {
-                id = episodeJson.get("id").asInt
-            } else {
-                id = -1
+            id = when {
+                episodeJson.has("episodeid") -> episodeJson.get("episodeid").asInt
+                episodeJson.has("id") -> episodeJson.get("id").asInt
+                else -> -1
             }
 
             title = episodeJson.get("title").asString

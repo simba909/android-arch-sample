@@ -1,19 +1,18 @@
 package se.jarbrant.androidarchsample
 
-import android.arch.lifecycle.LifecycleActivity
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.widget.Toolbar
+import se.jarbrant.androidarchsample.extensions.getViewModel
 import se.jarbrant.androidarchsample.ui.MainAdapter
 import se.jarbrant.androidarchsample.ui.SpacingItemDecoration
 import se.jarbrant.androidarchsample.viewmodels.ChannelViewModel
 
-class MainActivity : LifecycleActivity() {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private val adapter = MainAdapter()
@@ -37,7 +36,7 @@ class MainActivity : LifecycleActivity() {
     override fun onStart() {
         super.onStart()
 
-        val viewModel = ViewModelProviders.of(this).get(ChannelViewModel::class.java)
+        val viewModel = getViewModel(ChannelViewModel::class.java)
         viewModel.currentEpisodes.observe(this, Observer { episodes ->
             if (episodes != null) {
                 Log.d(TAG, "Setting data on adapter...")
