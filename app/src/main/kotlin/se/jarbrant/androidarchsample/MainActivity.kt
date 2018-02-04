@@ -1,51 +1,69 @@
 package se.jarbrant.androidarchsample
 
-import android.arch.lifecycle.Observer
 import android.os.Bundle
+import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.util.Log
-import android.widget.Toolbar
-import se.jarbrant.androidarchsample.extensions.getViewModel
-import se.jarbrant.androidarchsample.ui.MainAdapter
-import se.jarbrant.androidarchsample.ui.SpacingItemDecoration
-import se.jarbrant.androidarchsample.viewmodels.ChannelViewModel
+import android.view.MenuItem
+import se.jarbrant.androidarchsample.ui.ChannelsFragment
+import se.jarbrant.androidarchsample.ui.PopularEpisodesFragment
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var recyclerView: RecyclerView
-    private val adapter = MainAdapter()
+    private val channelsFragment = ChannelsFragment()
+    private val popularEpisodesFragment = PopularEpisodesFragment()
+
+    private lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setActionBar(toolbar)
+        bottomNavigationView = findViewById(R.id.main_bottom_navigation)
 
-        recyclerView = findViewById(R.id.recycler_view)
-        recyclerView.setHasFixedSize(true)
+        // Do initial fragment setup...
+        supportFragmentManager.beginTransaction()
+                .add(R.id.main_container, channelsFragment)
+                .commit()
 
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = adapter
-
-        recyclerView.addItemDecoration(SpacingItemDecoration())
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        val viewModel = getViewModel(ChannelViewModel::class.java)
-        viewModel.currentEpisodes.observe(this, Observer { episodes ->
-            if (episodes != null) {
-                Log.d(TAG, "Setting data on adapter...")
-                adapter.setData(episodes)
+        with(bottomNavigationView) {
+            setOnNavigationItemReselectedListener {
+                // TODO -> React to this event...
             }
-        })
+            setOnNavigationItemSelectedListener {
+                handleNavigation(it)
+                true
+            }
+        }
     }
 
-    companion object {
-        private val TAG: String = MainActivity::class.java.simpleName
+    private fun handleNavigation(selectedItem: MenuItem) {
+        val transaction = supportFragmentManager.beginTransaction()
+
+        when (selectedItem.itemId) {
+            R.id.main_navigation_channels -> {
+                if (supportFragmentManager.findFragmentByTag(PopularEpisodesFragment.TAG) != null) {
+                    transaction.detach(popularEpisodesFragment)
+                }
+
+                transaction.attach(channelsFragment)
+            }
+            R.id.main_navigation_popular_episodes -> {
+                transaction.detach(channelsFragment)
+
+                if (supportFragmentManager.findFragmentByTag(PopularEpisodesFragment.TAG) != null) {
+                    // We already have the popular fragment in the FragmentManager, only
+                    // need to attach it again
+                    transaction.attach(popularEpisodesFragment)
+                } else {
+                    transaction.add(
+                            R.id.main_container,
+                            popularEpisodesFragment,
+                            PopularEpisodesFragment.TAG
+                    )
+                }
+            }
+        }
+
+        transaction.commit()
     }
 }

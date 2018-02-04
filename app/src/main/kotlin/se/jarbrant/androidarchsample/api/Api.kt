@@ -3,6 +3,7 @@ package se.jarbrant.androidarchsample.api
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import se.jarbrant.androidarchsample.api.deserialize.ChannelDeserializer
 import se.jarbrant.androidarchsample.api.deserialize.CurrentEpisodeDeserializer
@@ -18,7 +19,6 @@ import se.jarbrant.androidarchsample.api.response.CurrentEpisodesResponse
 object Api {
 
     val client: SRApi
-    const val baseUrl = "https://api.sr.se/api/v2/"
 
     private val gson: Gson = GsonBuilder()
             .registerTypeAdapter(Channel::class.java, ChannelDeserializer())
@@ -28,7 +28,8 @@ object Api {
 
     init {
         val retrofit = Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(SRApi.baseUrl)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
 

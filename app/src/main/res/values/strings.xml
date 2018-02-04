@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Android Arch Sample</string>
+
+    <!-- Toolbar titles -->
+    <string name="toolbar_title_channels">Live channels</string>
+    <string name="toolbar_title_popular">Popular episodes</string>
+
+    <!-- Main bottom navigation -->
+    <string name="main_bottom_navigation_popular_episodes">Popular</string>
+    <string name="main_bottom_navigation_channels">Live</string>
 </resources>

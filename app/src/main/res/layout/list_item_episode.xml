@@ -3,27 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="se.jarbrant.androidarchsample.MainActivity">
+    android:layout_height="wrap_content"
+    android:background="?android:selectableItemBackground"
+    android:paddingBottom="6dp"
+    android:paddingTop="6dp">
 
-    <FrameLayout
-        android:id="@+id/main_container"
+    <ImageView
+        android:id="@+id/list_item_episode_image"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/main_bottom_navigation"
+        android:layout_height="56dp"
+        android:contentDescription="@null"
+        app:layout_constraintDimensionRatio="16:10"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/main_bottom_navigation"
+    <TextView
+        android:id="@+id/list_item_episode_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/list_item_episode_image"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_container"
-        app:menu="@menu/main_bottom_navigation" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Episode title" />
 
 </android.support.constraint.ConstraintLayout>

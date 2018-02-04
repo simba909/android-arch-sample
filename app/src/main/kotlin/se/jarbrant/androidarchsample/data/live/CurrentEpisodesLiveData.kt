@@ -11,7 +11,7 @@ import se.jarbrant.androidarchsample.api.Api
 import se.jarbrant.androidarchsample.api.response.CurrentEpisodesResponse
 import se.jarbrant.androidarchsample.data.Channel
 import se.jarbrant.androidarchsample.data.CurrentEpisode
-import se.jarbrant.androidarchsample.extensions.postDelayed
+import se.jarbrant.androidarchsample.utils.extensions.postDelayed
 
 /**
  * @author Simon Jarbrant

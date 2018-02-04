@@ -1,4 +1,4 @@
-package se.jarbrant.androidarchsample.ui
+package se.jarbrant.androidarchsample.ui.lists
 
 import android.support.v7.util.DiffUtil
 import android.support.v7.widget.RecyclerView
@@ -13,9 +13,17 @@ import se.jarbrant.androidarchsample.utils.CurrentEpisodeDiffUtil
  * @author Simon Jarbrant
  * Created on 2017-05-20.
  */
-class MainAdapter : RecyclerView.Adapter<CurrentEpisodeHolder>() {
+class CurrentEpisodesAdapter : RecyclerView.Adapter<CurrentEpisodeHolder>() {
 
-    private var items: List<CurrentEpisode> = emptyList()
+    var items: List<CurrentEpisode> = emptyList()
+        set(value) {
+            val differ = CurrentEpisodeDiffUtil(field, value)
+            val result = DiffUtil.calculateDiff(differ)
+
+            field = value
+
+            result.dispatchUpdatesTo(this)
+        }
 
     override fun getItemCount() = items.size
 
@@ -32,14 +40,5 @@ class MainAdapter : RecyclerView.Adapter<CurrentEpisodeHolder>() {
 
     override fun onViewRecycled(holder: CurrentEpisodeHolder) {
         holder.unbind()
-    }
-
-    fun setData(newData: List<CurrentEpisode>) {
-        val differ = CurrentEpisodeDiffUtil(items, newData)
-        val result = DiffUtil.calculateDiff(differ)
-
-        items = newData
-
-        result.dispatchUpdatesTo(this)
     }
 }
