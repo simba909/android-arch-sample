@@ -9,6 +9,9 @@ import com.google.gson.annotations.SerializedName
 data class Episode(
         val id: Int,
         val title: String,
+        val description: String,
         @SerializedName("imageurl")
-        val imageUrl: String
+        val imageUrl: String,
+        @SerializedName("downloadpodfile")
+        val downloadSoundMeta: SoundMeta?
 )
