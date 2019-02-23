@@ -1,4 +1,4 @@
-package se.jarbrant.androidarchsample.utils.extensions
+package se.jarbrant.androidarchsample.extensions
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProviders

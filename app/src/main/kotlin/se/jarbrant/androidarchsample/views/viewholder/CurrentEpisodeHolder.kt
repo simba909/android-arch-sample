@@ -8,7 +8,7 @@ import android.widget.TextView
 import com.squareup.picasso.Picasso
 import se.jarbrant.androidarchsample.R
 import se.jarbrant.androidarchsample.models.CurrentEpisode
-import se.jarbrant.androidarchsample.utils.extensions.toShortClock
+import se.jarbrant.androidarchsample.extensions.toShortClock
 
 /**
  * @author Simon Jarbrant

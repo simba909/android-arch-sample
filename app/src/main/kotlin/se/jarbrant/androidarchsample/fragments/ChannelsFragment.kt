@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import se.jarbrant.androidarchsample.R
 import se.jarbrant.androidarchsample.views.SpacingItemDecoration
 import se.jarbrant.androidarchsample.views.lists.CurrentEpisodesAdapter
-import se.jarbrant.androidarchsample.utils.extensions.getViewModel
+import se.jarbrant.androidarchsample.extensions.getViewModel
 import se.jarbrant.androidarchsample.viewmodels.ChannelViewModel
 
 /**

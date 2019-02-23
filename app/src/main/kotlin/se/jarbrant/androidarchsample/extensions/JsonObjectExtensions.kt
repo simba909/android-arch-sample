@@ -1,4 +1,4 @@
-package se.jarbrant.androidarchsample.utils.extensions
+package se.jarbrant.androidarchsample.extensions
 
 import com.google.gson.JsonObject
 

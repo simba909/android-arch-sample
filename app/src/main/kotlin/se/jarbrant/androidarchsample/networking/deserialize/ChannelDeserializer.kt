@@ -6,7 +6,7 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import se.jarbrant.androidarchsample.models.Channel
-import se.jarbrant.androidarchsample.utils.extensions.getOrElse
+import se.jarbrant.androidarchsample.extensions.getOrElse
 import java.lang.reflect.Type
 
 /**
