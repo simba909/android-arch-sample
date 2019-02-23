@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="se.jarbrant.androidarchsample.MainActivity">
+    tools:context="se.jarbrant.androidarchsample.activities.MainActivity">
 
     <FrameLayout
         android:id="@+id/main_container"

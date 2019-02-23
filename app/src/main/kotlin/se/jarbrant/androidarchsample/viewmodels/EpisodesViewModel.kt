@@ -6,7 +6,7 @@ import android.arch.lifecycle.ViewModel
 import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import se.jarbrant.androidarchsample.data.Episode
+import se.jarbrant.androidarchsample.models.Episode
 import se.jarbrant.androidarchsample.repositories.EpisodeRepository
 
 /**

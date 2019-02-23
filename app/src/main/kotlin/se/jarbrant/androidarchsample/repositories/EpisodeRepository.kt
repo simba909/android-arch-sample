@@ -2,8 +2,8 @@ package se.jarbrant.androidarchsample.repositories
 
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import se.jarbrant.androidarchsample.api.Api
-import se.jarbrant.androidarchsample.data.Episode
+import se.jarbrant.androidarchsample.networking.Api
+import se.jarbrant.androidarchsample.models.Episode
 
 /**
  * @author Simon Jarbrant

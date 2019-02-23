@@ -2,7 +2,7 @@ package se.jarbrant.androidarchsample
 
 import android.app.Application
 import android.util.Log
-import se.jarbrant.androidarchsample.repositories.DatabaseRepository
+import se.jarbrant.androidarchsample.models.database.DatabaseManager
 
 /**
  * @author Simon Jarbrant
@@ -13,11 +13,6 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        Log.d(TAG, "Initializing database...")
-        DatabaseRepository.initialize(applicationContext)
-    }
-
-    companion object {
-        private val TAG: String = App::class.java.simpleName
+        DatabaseManager.initialize(applicationContext)
     }
 }

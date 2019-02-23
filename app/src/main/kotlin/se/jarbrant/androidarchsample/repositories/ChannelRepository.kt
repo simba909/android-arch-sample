@@ -6,9 +6,10 @@ import android.util.Log
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import se.jarbrant.androidarchsample.api.Api
-import se.jarbrant.androidarchsample.api.response.ChannelsResponse
-import se.jarbrant.androidarchsample.data.Channel
+import se.jarbrant.androidarchsample.networking.Api
+import se.jarbrant.androidarchsample.networking.response.ChannelsResponse
+import se.jarbrant.androidarchsample.models.Channel
+import se.jarbrant.androidarchsample.models.database.DatabaseManager
 
 /**
  * @author Simon Jarbrant
@@ -18,7 +19,7 @@ object ChannelRepository {
 
     private val TAG: String = ChannelRepository::class.java.simpleName
 
-    private val channelDao = DatabaseRepository.database.channelDao()
+    private val channelDao = DatabaseManager.database.channelDao()
 
     fun getChannel(channelId: Int): Channel {
         return channelDao.load(channelId)

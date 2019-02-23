@@ -2,8 +2,8 @@ package se.jarbrant.androidarchsample.viewmodels
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
-import se.jarbrant.androidarchsample.data.Channel
-import se.jarbrant.androidarchsample.data.live.CurrentEpisodesLiveData
+import se.jarbrant.androidarchsample.models.Channel
+import se.jarbrant.androidarchsample.models.live.CurrentEpisodesLiveData
 import se.jarbrant.androidarchsample.repositories.ChannelRepository
 
 /**
