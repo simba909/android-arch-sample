@@ -1,6 +1,7 @@
 package se.jarbrant.androidarchsample.fragments
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -9,10 +10,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import se.jarbrant.androidarchsample.R
+import se.jarbrant.androidarchsample.extensions.TAG
+import se.jarbrant.androidarchsample.viewmodels.ChannelViewModel
+import se.jarbrant.androidarchsample.viewmodels.factories.ViewModelFactory
 import se.jarbrant.androidarchsample.views.SpacingItemDecoration
 import se.jarbrant.androidarchsample.views.lists.CurrentEpisodesAdapter
-import se.jarbrant.androidarchsample.extensions.getViewModel
-import se.jarbrant.androidarchsample.viewmodels.ChannelViewModel
 
 /**
  * @author Simon Jarbrant
@@ -50,16 +52,15 @@ class ChannelsFragment : ToolbarFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val viewModel = getViewModel(ChannelViewModel::class.java)
+        val viewModelFactory = ViewModelFactory()
+        val viewModel = ViewModelProviders.of(this, viewModelFactory)
+                .get(ChannelViewModel::class.java)
+
         viewModel.currentEpisodes.observe(this, Observer { episodes ->
             if (episodes != null) {
                 Log.d(TAG, "Setting data on currentEpisodesAdapter...")
                 currentEpisodesAdapter.items = episodes
             }
         })
-    }
-
-    companion object {
-        val TAG: String = ChannelsFragment::class.java.simpleName
     }
 }

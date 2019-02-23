@@ -4,8 +4,8 @@ import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import se.jarbrant.androidarchsample.models.CurrentEpisode
+import se.jarbrant.androidarchsample.models.database.DatabaseManager
 import se.jarbrant.androidarchsample.networking.response.CurrentEpisodesResponse
-import se.jarbrant.androidarchsample.repositories.ChannelRepository
 import java.lang.reflect.Type
 
 /**
@@ -13,6 +13,8 @@ import java.lang.reflect.Type
  * Created on 2017-07-17.
  */
 class CurrentEpisodesDeserializer : JsonDeserializer<CurrentEpisodesResponse> {
+
+    private val channelDao = DatabaseManager.database.channelDao()
 
     override fun deserialize(json: JsonElement,
                              typeOfT: Type,
@@ -31,7 +33,7 @@ class CurrentEpisodesDeserializer : JsonDeserializer<CurrentEpisodesResponse> {
 
                 if (channelJson.has("id")) {
                     val channelId = channelJson.get("id").asInt
-                    episode.channel = ChannelRepository.getChannel(channelId)
+                    episode.channel = channelDao.load(channelId)
                 }
 
                 episodes.add(episode)

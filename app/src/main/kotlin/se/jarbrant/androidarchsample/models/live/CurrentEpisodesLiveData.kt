@@ -4,32 +4,33 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MediatorLiveData
 import android.os.Handler
 import android.util.Log
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import se.jarbrant.androidarchsample.networking.Api
-import se.jarbrant.androidarchsample.networking.response.CurrentEpisodesResponse
+import se.jarbrant.androidarchsample.extensions.TAG
+import se.jarbrant.androidarchsample.extensions.postDelayed
 import se.jarbrant.androidarchsample.models.Channel
 import se.jarbrant.androidarchsample.models.CurrentEpisode
-import se.jarbrant.androidarchsample.extensions.postDelayed
+import se.jarbrant.androidarchsample.networking.Api
+import se.jarbrant.androidarchsample.networking.communicator.Communicator
+import se.jarbrant.androidarchsample.networking.communicator.CommunicatorTask
 
 /**
  * @author Simon Jarbrant
  * Created on 2017-07-16.
  */
-class CurrentEpisodesLiveData(channelSource: LiveData<List<Channel>>)
-    : MediatorLiveData<List<CurrentEpisode>>() {
+class CurrentEpisodesLiveData(
+        channelSource: LiveData<List<Channel>>,
+        private val communicator: Communicator
+) : MediatorLiveData<List<CurrentEpisode>>() {
 
     private val handler = Handler()
-
-    private var channelIds: List<Int>? = null
+    private var channelIds: IntArray = intArrayOf()
+    private var refreshTask: CommunicatorTask? = null
 
     init {
         addSource(channelSource) { channels ->
             if (channels != null) {
                 // We have new channels!
                 Log.d(TAG, "New channels: $channels")
-                channelIds = channels.map { it.id }
+                channelIds = channels.map { it.id }.toIntArray()
                 refresh()
             }
         }
@@ -38,7 +39,7 @@ class CurrentEpisodesLiveData(channelSource: LiveData<List<Channel>>)
     override fun onActive() {
         super.onActive()
 
-        if (channelIds != null) {
+        if (channelIds.isNotEmpty()) {
             refresh()
         }
     }
@@ -48,49 +49,35 @@ class CurrentEpisodesLiveData(channelSource: LiveData<List<Channel>>)
 
         // Cancel any future refreshes
         handler.removeCallbacksAndMessages(null)
+
+        // Cancel any ongoing refresh tasks
+        refreshTask?.cancel()
     }
 
     private fun refresh() {
         Log.d(TAG, "Refreshing currently playing episodes...")
-        Api.client.getPlayingEpisodes().enqueue(object : Callback<CurrentEpisodesResponse> {
+        val call = Api.client.getPlayingEpisodes()
+        refreshTask = communicator.perform(call) { result ->
+            val data = result.getOrNull()
 
-            override fun onFailure(call: Call<CurrentEpisodesResponse>, t: Throwable) {
-                Log.e(TAG, "Couldn't fetch currently playing episodes", t)
+            if (data == null) {
+                Log.e(TAG, "Couldn't fetch currently playing episodes", result.exceptionOrNull())
+                return@perform
             }
 
-            override fun onResponse(call: Call<CurrentEpisodesResponse>,
-                                    response: Response<CurrentEpisodesResponse>) {
-
-                if (response.isSuccessful) {
-                    val responseBody = response.body()
-                    if (responseBody != null) {
-                        channelIds?.let { ids ->
-                            val episodes = responseBody.episodes.filter {
-                                it.channel?.id in ids
-                            }
-
-                            value = episodes
-                            scheduleNextUpdate(episodes)
-                        }
-                    }
-                } else {
-                    // meh!
-                }
+            val episodes = data.episodes.filter { episode ->
+                val channelId = episode.channel?.id
+                channelId != null && channelId in channelIds
             }
-        })
+
+            scheduleNextUpdate(episodes)
+            value = episodes
+        }
     }
 
     private fun scheduleNextUpdate(episodes: List<CurrentEpisode>) {
-        // Post a new runnable to refresh again
-        var nextUpdate = Long.MAX_VALUE
-
-        episodes.forEach {
-            if (it.endTime < nextUpdate) {
-                nextUpdate = it.endTime
-            }
-        }
-
-        var timeLeft = nextUpdate - System.currentTimeMillis()
+        val soonestEndingEpisode = episodes.minBy { it.endTime } ?: return
+        var timeLeft = soonestEndingEpisode.endTime - System.currentTimeMillis()
 
         if (timeLeft < 3000L) {
             Log.d(TAG, "Next update is too soon, postponing 3 seconds")
@@ -103,9 +90,5 @@ class CurrentEpisodesLiveData(channelSource: LiveData<List<Channel>>)
         handler.postDelayed(timeLeft) {
             refresh()
         }
-    }
-
-    companion object {
-        private val TAG: String = CurrentEpisodesLiveData::class.java.simpleName
     }
 }
