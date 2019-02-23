@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
+import se.jarbrant.androidarchsample.R
 import se.jarbrant.androidarchsample.fragments.ChannelsFragment
 import se.jarbrant.androidarchsample.fragments.PopularEpisodesFragment
 
