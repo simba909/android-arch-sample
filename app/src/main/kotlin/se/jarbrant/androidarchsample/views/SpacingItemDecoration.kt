@@ -16,7 +16,7 @@ class SpacingItemDecoration : RecyclerView.ItemDecoration() {
                                 state: RecyclerView.State) {
 
         val itemPosition = parent.getChildAdapterPosition(view)
-        val adapterSize = parent.adapter.itemCount
+        val adapterSize = parent.adapter?.itemCount ?: 0
 
         if (itemPosition != adapterSize - 1) {
             outRect.bottom = 40
